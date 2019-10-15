@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "record-form-id": "/pages/component/record-form-id",
+    "image-selector": "/pages/component/image-selector",
+    "input-limit": "/pages/component/input-limit"
+  }
+}

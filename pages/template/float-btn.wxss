@@ -1,0 +1,12 @@
+.float-btn-wrapper {
+  margin-bottom: 20rpx;
+}
+.float-btn-wrapper navigator {
+  padding: 30rpx 20rpx 0 20rpx;
+}
+image.float-btn {
+  width: 100rpx;
+}
+.float-btn-wrapper.float-home-btn {
+  bottom: 70px;
+}

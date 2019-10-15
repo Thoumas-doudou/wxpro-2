@@ -1,0 +1,49 @@
+<template name="topics">
+  <view class="topics-wrapper">
+    <scroll-view scroll-x class="topic-scroll-view-x">
+      <view class="topics">
+        <view class="vspace-30"></view>
+        <navigator class="topic" url="/pages/topic/topic-picker?role=viewer">
+          <image class="topic-icon" src="http://oss.matrixsci.cn/bycircle/topic/1-thumb.png" />
+          <view class="topic-name no-mask">所有主题在这里</view>
+        </navigator>
+        <view class="vspace-13"></view>
+        <block wx:for="{{topics}}" wx:for-item="topic" wx:key="topic.id">
+          <record-form-id url="/pages/topic/topic?id={{topic.id}}">
+            <view class="topic">
+              <image class="topic-icon" src="{{topic.thumb}}" />
+              <view class="topic-name">{{topic.name}}</view>
+            </view>
+          </record-form-id>
+          <view class="vspace-13"></view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<!-- 请使用component中的topics，不要用下面的这个！ -->
+<!-- <template name="topic-list">
+  <view class="topics-wrapper">
+    <view class="search-topics"><input class="search-topics-input" placeholder="搜索你想看的主题"></input></view>
+    <scroll-view scroll-y class="topic-scroll-view-y">
+      <view class="topic-list">
+        <view wx:for="{{topics}}"
+          wx:for-item="topic"
+          wx:key="topic.id"
+          class="topic-item">
+          <image class="topic-icon" src="../../images/sample/topic-icon.png"/>
+          <view class="topic-content">
+            <view class="topic-name">{{topic.name}}</view>
+            <view class="topic-data">
+              今⽇帖⼦: 219    总帖⼦数: 1894
+            </view>
+          </view>
+          <view class="topic-go-wrapper">
+            <navigator class="topic-go" url=".">Go</navigator>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template> -->

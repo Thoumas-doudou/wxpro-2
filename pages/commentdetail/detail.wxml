@@ -1,0 +1,178 @@
+<!--pages/commentdetail/detail.wxml-->
+<import src="../template/bottom-loading.wxml" />
+
+<template name="content-header-template">
+  <navigator class="user-wrapper flex" url="/pages/user/profile?openId={{author.openId}}">
+    <view class="post-avatar">
+      <image mode="aspectFill" src="{{author.avatarUrl}}"></image>
+    </view>
+    <view class="post-user-name-wrapper flex">
+      <view class="post-user-name">{{author.nickName}}</view>
+    </view>
+  </navigator>
+  <view class="post-likes">
+    <text class="post-like-count {{isLiked?'liked':''}}">{{likeCount}}</text>
+    <image catchtap="contentLike" data-id="{{contentId}}" data-type="{{contentType}}" src="../../images/icon/like.png" wx:if="{{isLiked == false}}"></image>
+    <image catchtap="contentDislike" data-id="{{contentId}}" data-type="{{contentType}}" src="../../images/icon/liked.png" wx:else></image>
+  </view>
+</template>
+
+
+<template name="content-body-template">
+  <view class="post-text-content" catchlongtap='onCopyContent' data-content="{{content}}">
+    <block wx:if="{{to.length > 0}}">
+      回复
+      <navigator url="/pages/user/profile?openId={{openId}}" class="reply-to-name inline-block">{{to}}</navigator>
+      :
+    </block>
+    <text>{{content||""}}</text>
+  </view>
+  <view wx:for="{{images}}" wx:for-item="image" wx:for-index="index" wx:key="image" wx:if="{{index < 1}}" class="post-image-content">
+    <image mode="aspectFill" lazy-load="true" src="{{image}}" catchtap="onPreviewImage" data-src="{{image}}" style="{{styleMap[styleKey]}}" data-style-key="{{styleKey}}" bindload='onImageLoad'></image>
+  </view>
+</template>
+
+<view class="full relative wrapper">
+  <!-------- 评论主题内容 -------->
+  <view class="post-wrapper"
+    bindtouchstart='onTouchStart' bindtouchend='onTouchEnd' data-debug-data="comment:{{comment.id}}">
+    <!---- 评论头部:头像,昵称,赞数量 ---->
+    <view class="post-header">
+      <template is="content-header-template" data="{{author: comment.author, likeCount: comment.likeCount, isLiked: comment.isLiked, contentId:comment.id, contentType:'comment'}}" />
+    </view>
+    <!---- 评论内容:文字，图片 ---->
+    <view class="post-contents">
+      <template is="content-body-template" data="{{content: comment.content, images: comment.images, styleMap, styleKey: 'comment'+comment.id}}" />
+    </view>
+
+    <!---- 评论底部 ---->
+    <view class="post-tool-bar-wrapper">
+      <view class="post-tool-bar fullwidth">
+        <!-- 评论时间 TODO: dynamic date-->
+        <view class="post-date">{{comment.commentDateString}}</view>
+        <!-- 更多工具 -->
+
+        <view class="post-tool-bar-item post-shares" catchtap="onShowMenueComment"
+          data-id="{{comment.id}}" data-open-id="{{comment.author.openId}}">
+          <image mode="widthFix"src="../../images/icon/function-button.png"></image>
+        </view>
+      </view>
+      <view class="post-link fullwidth">
+        <navigator class="inline-block" url="/pages/post/post?id={{comment.postId}}">
+          查看原消息
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <view class="graybar"></view>
+
+  <!-------- 所有回复 -------->
+  <view class="reply-list-wrapper">
+    <view class="title common-padding"><view>全部回复</view></view>
+    <view wx:if="{{comment.replies.length}}" class="post-wrapper">
+      <block wx:for="{{comment.replies}}" wx:for-item="reply" wx:for-index="replyIndex" wx:key="{{reply.id}}" wx:index="index">
+        <view class="reply-item"
+          bindtouchstart='onTouchStart' bindtouchend='onTouchEnd' data-debug-data="reply:{{reply.id}}">
+          <!-- Reply details -->
+          <!---- 评论头部:头像,昵称,赞数量 ---->
+          <view class="post-header">
+            <template is="content-header-template" data="{{author: reply.author, likeCount: reply.likeCount, isLiked: reply.isLiked, contentId:reply.id, contentType:'reply'}}" />
+          </view>
+          <!---- 评论内容:文字，图片 ---->
+          <view class="post-contents">
+            <template is="content-body-template" data="{{content: reply.content, images: reply.images, to:reply.replyTo.nickName, openId:reply.replyTo.openId, styleMap, styleKey: 'reply'+reply.id}}" />
+          </view>
+
+          <!---- 评论底部 ---->
+          <!-- 底栏 -->
+          <view class="post-tool-bar-wrapper">
+            <view class="post-tool-bar">
+              <!-- 发帖时间 -->
+              <view class="post-date">{{reply.replyDateString}}</view>
+              <!-- 评论 -->
+              <view class="post-tool-bar-item post-comments">
+                <text class="comment-tool-bar-button" data-index="{{replyIndex}}" bindtap="onReplyTo">回复</text>
+              </view>
+            </view>
+            <!-- 功能按钮 -->
+            <view class="post-tool-bar-item post-shares" catchtap="onShowMenueReply"
+              data-id="{{reply.id}}" data-open-id="{{reply.author.openId}}" >
+              <image mode="widthFix"src="../../images/icon/function-button.png"></image>
+            </view>
+          </view>
+
+          <view class="line"></view>
+        </view>
+      </block>
+    </view>
+    <view wx:else class="no-replies content-center">当前还没有回复</view>
+  </view>
+  
+  <template is="bottom-loading" data="{{loading: bottomLoading}}"/>
+
+  <!-- 底部栏 -->
+  <view class="bottom-bar-placeholder">
+    <!-- 这个看不见的框框是为了把滚动区域撑大，否则部分内容会被底栏挡住。 -->
+  </view>
+
+  <view class="fullwidth left bottom fixed bottom-bar flex nowrap {{isAddBottomPadding && 'bottom-padding'}}">
+    <!-- 返回北邮圈按钮。只有点击分享链接进入时才会显示 -->
+    <view class="grow0 shrink0 home-btn content-center"
+      wx:if="{{showHomeBtn && (!focused && !content && !images.length)}}">
+      <navigator url='/pages/index/index' open-type='reLaunch'>
+        <view>去二楼</view>
+        <view>首页</view>
+      </navigator>
+    </view>
+    <!-- 添加图片按钮 -->
+    <view class="grow0 shrink0 send-btn content-center"
+      wx:if="{{focused || !!content || images.length || selectingImage || showAddImageBtn}}"
+      bindtap='onSelectImage'>
+      <image class="icon-img" src="../../images/icon/add-img.png"></image>
+    </view>
+    <!-- 输入框 -->
+    <view class="grow1 shrink1 input-wrapper {{focused || !!content || images.length || selectingImage || showAddImageBtn ? 'focused' : ''}}">
+      <view class="fullwidth input">
+        <!-- 输入文本内容 -->
+        <!-- 加这个if else 纯粹就是为了设置不同的cursor-spacing。
+          目的是不让弹出的键盘挡住输入框。有图时键盘不挡住图。
+          尝试过cursor-spacing={{images.length > 0 : 120 : 20}}但是不work。 -->
+        <block wx:if="{{images.length === 0}}">
+          <textarea placeholder="{{replyToAuthor ? '回复 ' + replyToAuthor.nickName : '写下你想说的...'}}"
+            placeholder-class='placeholder' class="fullwidth" auto-height="true" fixed="true"
+            focus="{{focused}}" value="{{content||''}}"
+            bindinput="onInputChange" bindtap="onInputFocus"
+            bindfocus="onInputFocus" bindblur="onInputBlur" auto-focus="{{autoFocus}}"
+            maxlength="{{maxInputLength*2}}"
+            cursor-spacing='20'/>
+        </block>
+        <block wx:else>
+          <textarea placeholder="{{replyToAuthor ? '回复 ' + replyToAuthor.nickName : '写下你想说的...'}}"
+            placeholder-class='placeholder' class="fullwidth" auto-height="true" fixed="true"
+            focus="{{focused}}" value="{{content||''}}"
+            bindinput="onInputChange" bindtap="onInputFocus"
+            bindfocus="onInputFocus" bindblur="onInputBlur" auto-focus="{{autoFocus}}"
+            maxlength="{{maxInputLength*2}}"
+            cursor-spacing='120'/>
+        </block>
+        <input-limit content="{{content}}" maxInputLength="{{maxInputLength}}" displayWhenRemainingLessThan="16" />
+        <!-- 图片选择器 -->
+        <view wx:if="{{images.length > 0}}" style="margin-top: 6px;">
+          <image-selector
+            displayImages="{{images}}"
+            maximages="1" bindimageschange="onImagesChange" hidepadding="true"
+            bindselectstart="onImagesSelectStart"
+            bindselectend="onImagesSelectEnd"/>
+        </view>
+      </view>
+    </view>
+    <!-- 发送按钮 -->
+    <!-- <view class="grow0 shrink0 send-btn content-center"
+      bindtap="onAddReply">发送</view> -->
+    <form class="grow0 shrink0"
+      bindsubmit="onAddReply" report-submit='true'>
+      <button class="send-btn share-btn" form-type="submit">发送</button>
+    </form>
+  </view>
+</view>

@@ -1,0 +1,34 @@
+<!--pages/component/topics.wxml-->
+<view class="topics-wrapper {{fullHeight && 'fullheight'}}">
+  <view class="search-topics">
+    <input class="search-topics-input" placeholder="搜索你想看的主题"
+      placeholder-class='placeholder'
+      bindinput="onSearch"></input>
+    <view class="line"></view>
+  </view>
+  <!-- <scroll-view scroll-y class="topic-scroll-view-y" scroll-with-animation="true"> -->
+    <view class="topic-list">
+      <view wx:for="{{topicsToDisplay}}"
+        wx:for-item="topic"
+        wx:for-index="index"
+        wx:key="{{topic.id}}"
+        wx:if="{{role!=='picker' || topic.canPost}}"
+        class="topic-item"
+        data-index="{{index}}"
+        bindtap="onTopicClick">
+        <image class="topic-icon" src="{{topic.thumb}}"/>
+        <view class="topic-content">
+          <view class="topic-name">{{topic.name}}</view>
+          <view class="topic-data">
+            <text class="today-post-count">今⽇帖⼦: {{topic.todayPostCount}}</text>
+            <text>总帖⼦数: {{topic.postCount}}</text>
+          </view>
+        </view>
+        <view class="topic-go-wrapper">
+          <navigator class="topic-go" url=".">Go</navigator>
+        </view>
+        <view class="line"></view>
+      </view>
+    </view>
+  <!-- </scroll-view> -->
+</view>

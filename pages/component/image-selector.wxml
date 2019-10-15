@@ -1,0 +1,15 @@
+<!--pages/component/image-selector.wxml-->
+<view class="image-selector-wrapper {{hidepadding ? 'no-padding' : ''}}">
+  <block wx:for="{{images}}" wx:for-item="image" wx:for-index="index" wx:key="image">
+    <view class="image-item {{imageSize==='large' ? 'image-item-large' : ''}}">
+      <image mode='aspectFill' src="{{image}}">
+        <image class="delete-image-btn" data-index="{{index}}"
+          bindtap="onRemoveImage" src="../../images/delete-image-btn.png"></image>
+      </image>
+    </view>
+  </block>
+  <view class="image-item add-image {{imageSize==='large' ? 'image-item-large' : ''}}">
+    <image wx:if="{{images.length < maximages}}" src="../../images/choose-image.png"
+      bindtap="onChooseImage"></image>
+  </view>
+</view>

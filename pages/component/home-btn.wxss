@@ -1,0 +1,4 @@
+@import "../template/float-btn.wxss";
+.fixed {position: fixed;}
+.right {right: 0;}
+.bottom {bottom: 0;}

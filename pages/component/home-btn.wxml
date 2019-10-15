@@ -1,0 +1,3 @@
+<!--pages/component/home-btn.wxml-->
+<import src="../template/float-btn.wxml" />
+<template wx:if="{{showHomeBtn}}" is="float-home-btn" />

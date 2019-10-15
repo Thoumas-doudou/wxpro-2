@@ -1,0 +1,96 @@
+/* pages/user/profile.wxss */
+
+page {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+/* banner */
+
+.banner {
+  background-image: linear-gradient(-1deg, #acabff 0%, #72a3ff 100%);
+  width: 100%;
+  height: 209px;
+  color: white;
+  box-sizing: border-box;
+}
+
+.nickname {
+  font-family: PingFangSC-Regular;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 28px;
+  color: #fff;
+  letter-spacing: -0.34px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.sign {
+  font-family: PingFang-SC-Regular;
+  font-size: 13px;
+  color: #fff;
+  text-align: center;
+  margin-top: 7px;
+  padding: 0 20px;
+}
+
+.avatar {
+  border: 2px solid #fff;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.15);
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+/* banner下方的灰色条 */
+
+.gray-bar {
+  height: 10px;
+  background-color: #f5f5f5;
+}
+.gray-bar.height5 {
+  height: 5px;
+}
+
+.detailInfo {
+  background-color: #acb3fd;
+  width: 100%;
+  height: 60px;
+  display: flex;
+}
+
+.number {
+  font-family: PingFang-SC-Medium;
+  font-size: 16px;
+  color: #fff;
+  letter-spacing: 0;
+  line-height: 20px;
+  text-align: center;
+}
+
+.number-font {
+  font-family: PingFang-SC-Regular;
+  font-size: 12px;
+  color: #fff;
+  letter-spacing: 0;
+  line-height: 20px;
+  text-align: center;
+}
+
+.no-post {
+  height: 280px;
+  font-size:13px;
+  color:#c8d4e0;
+}
+
+.no-post image {
+  width: 56px;
+}
+
+.no-post-text {
+  margin-top: 20px;
+}

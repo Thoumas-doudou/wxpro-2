@@ -1,0 +1,116 @@
+<!--pages/component/comment.wxml-->
+
+<template name="replies">
+  <view wx:if="{{replies && replies.length > 0}}" catchtap="onClickComment" class="replies-wrapper">
+    <block wx:for="{{replies}}"
+      wx:for-item="reply"
+      wx:for-index="index"
+      wx:key="reply.id"
+      wx:if="{{index < 3}}">
+      <view class="reply">
+        <view>
+          <navigator class="user-name inline-block" url='/pages/user/profile?openId={{reply.author.openId}}'
+            catchtap='onEmptyFunction'>
+            {{reply.author.nickName}}
+          </navigator>
+          <view wx:if="{{reply.replyTo}}" class="inline-block" style="margin-left: 0.3rem;">
+            <text>回复</text>
+            <navigator class="user-name inline-block" url='/pages/user/profile?openId={{reply.replyTo.openId}}'
+              catchtap='onEmptyFunction'>{{reply.replyTo.nickName}}</navigator>
+          </view>
+          <text>：</text>
+          <text class="reply-content" catchlongtap='onCopyContent' data-content="{{reply.content}}">{{reply.content || ''}}</text>
+          <view class="inline-block" wx:if="{{reply.images.length > 0}}"
+            catchtap="onPreviewImage" data-images="{{reply.images}}">
+            <image style="width:26rpx; height:26rpx;"
+              src="../../images/icon/img.png"></image>
+            <text class="link">查看图片</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:if="{{replies && replies.length > 3}}">
+      <view catchtap='onSeeAllComments' class="link">查看所有回复></view>
+    </block>
+  </view>
+</template>
+
+<!--
+一个帖子
+
+包含信息：
+
+1. 用户头像、昵称，时间；
+2. 所属主题
+3. 帖子内容
+3.1. 文字内容
+3.2. 图片（1图，2图，3图）
+4. 底部按钮栏，包括赞数，评论数分享按钮
+-->
+<view class="post-wrapper">
+  <view bindtouchstart='onTouchStart' bindtouchend='onTouchEnd' data-debug-data="comment:{{id}}">
+    <!-- 用户信息和所属主题 -->
+    <view class="post-header">
+      <!-- 用户头像 -->
+      <navigator class="author-warpper" url="/pages/user/profile?openId={{author.openId}}">
+        <view class="post-avatar">
+          <image mode='aspectFill' lazy-load="true" src="{{author.avatarUrl}}"></image>
+        </view>
+        <!-- 用户昵称和时间 -->
+        <view class="post-user-name-wrapper">
+          <view class="post-user-name">{{author.nickName}}</view>
+        </view>
+      </navigator>
+      <!-- 赞 -->
+      <view class="post-tool-bar-item post-likes">
+        <text class="{{isLiked ? 'liked' : ''}}">{{likeCount}}</text>  
+        <image catchtap="commentLike" data-id="{{id}}" src="../../images/icon/like.png" wx:if="{{isLiked == false}}"></image>
+        <image catchtap="commentDislike" data-id="{{id}}" src="../../images/icon/liked.png" wx:else></image>
+      </view>
+    </view>
+    <!-- post-header end -->
+
+    <!-- 帖子内容 -->
+    <view class="post-contents">
+      <!-- 文字内容 -->
+      <view class="post-text-content" catchlongtap='onCopyContent' data-content="{{content}}">
+        <text>{{content||''}}</text>
+      </view>
+      <!-- 图片内容 -->
+      <view wx:if="{{images && images.length}}" class="post-image-content {{images.length > 1 ? 'flex' : ''}}">
+        <view wx:for="{{images}}"
+          wx:for-item="image"
+          wx:for-index="index"
+          wx:key="image"
+          wx:if="{{index < 3}}"
+          class="comment-image">
+          <image mode="aspectFill" lazy-load="true" src="{{image}}" lazy-load="true"
+            catchtap="onPreviewImage" data-src="{{image}}" data-images="{{images}}"
+            style="{{style || ''}}"
+            bindload='onImageLoad'></image>
+        </view>
+      </view>
+      <!-- 回复 -->
+      <template is="replies" data="{{replies: comment.replies}}"/>
+    </view>
+  </view>
+
+  <!-- 底栏 -->
+  <view class="post-tool-bar-wrapper">
+    <view class="post-tool-bar">
+      <!-- 发帖时间 -->
+      <view class="post-date">{{commentDateString}}</view>
+      <!-- 评论 -->
+      <view class="post-tool-bar-item post-comments">
+        <text class="comment-tool-bar-button"
+          bindtap="onReplyTo">回复</text>
+      </view>
+    </view>
+    <!-- 功能按钮 -->
+    <view class="post-tool-bar-item post-shares" catchtap="onShowMenue" data-id="{{id}}">
+      <image mode="widthFix" src="../../images/icon/function-button.png"></image>
+    </view>
+  </view>
+
+  <view class="line"></view>
+</view>

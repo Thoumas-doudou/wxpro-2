@@ -1,0 +1,17 @@
+<!--pages/component/share-panel.wxml-->
+<view class="share-panel {{show && 'show'}}">
+  <view class="mask" catchtap="onShareMaskClick"></view>
+  <view class="panel">
+    <view class="title">分享</view>
+    <view class="btn-group">
+      <view class="btn" catchtap="onShareImageClick">
+        <view class="img"><image mode='widthFix' src="../../images/icon/share-image.png"></image></view>
+        <view>生成分享海报</view>
+      </view>
+      <view class="btn">
+        <view class="img"><image mode='widthFix' src="../../images/icon/share-wx.png"></image></view>
+        <view>分享给朋友</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,86 @@
+/* pages/my/my.wxss */
+page {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.common-padding {
+  padding-top: 0;
+}
+
+/* banner */
+.banner {
+  background-image:linear-gradient(-1deg, #acabff 0%, #72a3ff 100%);
+  width: 100%;
+  height: 107px;
+  color: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* padding: 0 23px; */
+  box-sizing: border-box;
+}
+
+.nickname {
+  font-size:20px;
+  font-weight: bold;
+  /* height: 28px; */
+  line-height: 28px;
+  margin-bottom: 7px;
+}
+
+.sign {
+  font-size:13px;
+}
+
+.avatar {
+  border:2px solid #ffffff;
+  box-shadow:0 4px 6px 0 rgba(0,0,0,0.15);
+  width:70px;
+  height:70px;
+  border-radius:100%;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+/* banner下方的灰色条 */
+.gray-bar {
+  height: 10px;
+  background-color: #f5f5f5;
+}
+
+/* 按钮列表 */
+.button-group {
+  background-color: white;
+}
+
+.button-wrapper {
+  height: 50px;
+  position: relative;
+  font-size:16px;
+  color:#323b45;
+}
+.button-wrapper .line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: -26px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.button-icon-wrapper {
+  margin-right: 20px;
+}
+
+.button-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.button-icon-next {
+  width: 6px;
+  height: 12px;
+}

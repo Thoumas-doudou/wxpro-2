@@ -1,0 +1,24 @@
+<!--pages/my/my-profile-edit.wxml-->
+<view class="gray-bar"></view>
+<view class="common-padding">
+  <block wx:if="{{field === 'avatarUrl'}}">
+    <view class="content-center">
+      <view>
+        <image src="{{value}}"></image>
+        <view class="buttons">
+          <text class="link" bindtap='onEditAvatar'>编辑</text>
+          <text class="gray"> | </text>
+          <text class="link" bindtap='onConfirm'>确定</text>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <input value="{{value}}" auto-focus='true' bindinput='onInput' bindconfirm='onConfirm' bindblur='onBlur'></input>
+    <input-limit content="{{value}}" maxInputLength="20"/>
+    <view class="tool-bar">
+      <!-- <button class="save-btn link inline-block" open-type="getPhoneNumber" bindgetphonenumber='onGetPhoneNumber'>获取本机号码</button> -->
+      <view class="save-btn link inline-block" catchtap='onConfirm'>保存</view>
+    </view>
+  </block>
+</view>

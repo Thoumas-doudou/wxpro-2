@@ -1,0 +1,38 @@
+<!--index.wxml-->
+<import src="../template/topics.wxml" />
+<import src="../template/float-btn.wxml" />
+<import src="../template/bottom-loading.wxml" />
+
+<view class="share-post {{!sharePost ? 'hidden' : ''}}">
+  <post post="{{sharePost}}" isShowHotComment="true"
+    collapseTextContent="true"
+    collapseImageContent="true"
+    showImageCount="true"/>
+</view>
+
+<view class="relative full">
+  <view class="topics-outer-wrapper">
+    <template is="topics" data="{{topics}}"/>
+  </view>
+
+  <view class="posts">
+    <view wx:for="{{posts}}"
+      wx:for-item="post"
+      wx:for-index="postIndex"
+      wx:key="{{post.id}}">
+      <post post="{{post}}" navigateToPost="true" isShowHotComment="true"
+        newShareStyle="true"
+        collapseTextContent="true"
+        collapseImageContent="true"
+        showImageCount="true"
+        hideSharePostPanel="{{hideSharePanel}}"
+        bindlikechange="onLikeChange"/>
+    </view>
+  </view>
+
+  <template is="bottom-loading" data="{{loading: bottomLoading}}"/>
+
+  <block wx:if="{{sendContentEnabled}}">
+    <template is="float-post-btn"/>
+  </block>
+</view>

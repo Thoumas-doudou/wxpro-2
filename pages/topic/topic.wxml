@@ -1,0 +1,75 @@
+<!--pages/topic/topic.wxml-->
+<import src="../template/float-btn.wxml" />
+
+<view class="share-post {{!sharePost ? 'hidden' : ''}}">
+  <post post="{{sharePost}}" isShowHotComment="true" collapseTextContent="true" collapseImageContent="true" showImageCount="true" />
+</view>
+
+<view>
+  <view class="common-padding banner relative">
+    <view class="absolute full left top banner-mask">
+      <image class="full" src="{{banner}}"></image>
+    </view>
+    <view class="text-center title-wrapper">
+      <view class="title">{{name}}</view>
+      <view class="description">{{description}}</view>
+    </view>
+    <view class="absolute left bottom fullwidth banner-bottom-bar flex nowrap common-padding">
+      <view>
+        <image style="width: 15px; height: 18px; margin-right: 5px" src="../../images/icon/post-count.png"></image>
+        <text>总帖子数 </text>
+        <text class="bold">{{postCount}}</text>
+      </view>
+      <view class="flex">
+        <picker class="sort-type" value="{{sortTypeIndex}}" range="{{sortTypes}}" range-key="name" bindchange="onSortTypeChange">
+          <view>
+            <text>{{sortTypes[sortTypeIndex].name}}</text>
+            <image class="down-triangle" src="/images/icon/down-triangle.png"></image>
+          </view>
+        </picker>
+        <button class="share-btn" open-type="share">
+          <image style="width: 40px; height: 28px" src="../../images/icon/share-topic.png"></image>
+        </button>
+        <!-- <share-btn generateImageUrl="{{generateImageUrl}}"
+          hideSharePanel="{{hideSharePanel}}"
+          center="true"
+          bindimagesaved="onShareImageSavedOrPreviewed"
+          bindimagepreviewed="onShareImageSavedOrPreviewed">
+          <button class="share-btn">
+            <image style="width: 40px; height: 28px"
+              src="../../images/icon/share-topic.png"></image>
+          </button>
+        </share-btn> -->
+      </view>
+    </view>
+  </view>
+
+  <view class="graybar height10"></view>
+
+  <view class="posts">
+    <block wx:if="{{posts.length > 0}}">
+      <view wx:for="{{posts}}" wx:for-item="post" wx:for-index="postIndex" wx:key="{{post.id}}">
+        <post post="{{post}}" showTopicName="{{false}}" navigateToPost="true" newShareStyle="true" showImageCount="true" collapseTextContent="true" collapseImageContent="true" hideSharePostPanel="{{hideSharePanel}}" bindlikechange="onLikeChange" />
+      </view>
+    </block>
+    <block wx:elif="{{!loading}}">
+      <view class="fullwidth content-center no-topic">
+        <view>
+          <view class="fullwidth text-center">
+            <image mode="widthFix" src="../../images/empty-topic.png"></image>
+          </view>
+          <view class="no-topic-description">你很幸运，看到一个全新的主题</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- <home-btn/> -->
+  <!-- <template is="float-post-btn" data="{{topicId: id, topicName: name}}" />   -->
+  <block wx:if="{{showHomeBtn}}">
+    <template is="float-home-btn" />
+  </block>
+  <block wx:if="{{sendContentEnabled && canPost}}">
+    <template is="float-post-btn" data="{{topicId: id, topicName: name}}" />
+  </block>
+</view>

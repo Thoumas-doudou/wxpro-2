@@ -1,0 +1,134 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"cloudfunctionRoot": "cloud-functions/",
+	"compileType": "miniprogram",
+	"libVersion": "2.2.5",
+	"appid": "wxe95ca6412fde8fb8",
+	"projectname": "bycircle",
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 14,
+			"list": [
+				{
+					"id": 0,
+					"name": "测试无限扫码",
+					"pathName": "pages/index/share-router",
+					"query": "scene=%2Fpages%2Fpost%2Fpost%3Fid%3D17"
+				},
+				{
+					"id": -1,
+					"name": "帖子页面自动滚动到评论区",
+					"pathName": "pages/post/post",
+					"query": "id=19&autoFocus=true"
+				},
+				{
+					"id": -1,
+					"name": "授权页",
+					"pathName": "pages/login/login",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "枫叶红上墙贴",
+					"pathName": "pages/post/post",
+					"query": "id=1689"
+				},
+				{
+					"id": -1,
+					"name": "主题：二楼新人报道",
+					"pathName": "pages/topic/topic",
+					"query": "id=1"
+				},
+				{
+					"id": -1,
+					"name": "资料编辑",
+					"pathName": "pages/my/my-profile",
+					"query": "id=1"
+				},
+				{
+					"id": -1,
+					"name": "资料编辑-手机号编辑",
+					"pathName": "pages/my/my-profile-edit",
+					"query": "field=phone&value="
+				},
+				{
+					"id": -1,
+					"name": "发帖页面",
+					"pathName": "pages/post/add",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "有广告的帖子",
+					"pathName": "pages/post/post",
+					"query": "id=3498"
+				},
+				{
+					"id": -1,
+					"name": "有url的帖子",
+					"pathName": "pages/post/post",
+					"query": "id= 3513"
+				},
+				{
+					"id": 10,
+					"name": "有视频的链接",
+					"pathName": "pages/post/post",
+					"query": "id=3589"
+				},
+				{
+					"id": -1,
+					"name": "热评",
+					"pathName": "pages/post/post",
+					"query": "id= 937"
+				},
+				{
+					"id": -1,
+					"name": "消息页面",
+					"pathName": "pages/messages/messages",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "topic页面",
+					"pathName": "pages/topic/topic",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "帖子详情页",
+					"pathName": "pages/post/post",
+					"query": "id=3522"
+				}
+			]
+		}
+	}
+}

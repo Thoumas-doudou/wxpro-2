@@ -1,0 +1,61 @@
+<!--pages/user/profile.wxml-->
+<!-- banner，包括昵称，签名，头像 -->
+<view class="banner common-padding content-center">
+  <view class="text-center">
+    <!-- 头像 -->
+    <view class="avatar inline-block" bindtap='onPreviewAvatar'>
+      <image mode="aspectFill" class="full" src="{{avatarUrl}}"></image>
+    </view>
+    <!-- 昵称 -->
+    <view class="nickname">{{nickName}}</view>
+    <!-- 签名 -->
+    <view class="sign">{{sign || '对于人类，自我介绍是最难的事情'}}</view>
+  </view>
+
+</view>
+<!-- end banner -->
+  <view class="detailInfo content-center">
+  <view>
+    <view class="number">
+    {{postCount}}
+    </view>
+    <view class="number-font">
+    主题帖
+    </view>
+  </view>
+  <view>
+    <view class="number">
+    {{allPostCount}}
+    </view>
+    <view class="number-font">
+    总帖数
+    </view>
+  </view>
+  <view>
+    <view class="number">
+    {{likedCount}}
+    </view>
+    <view class="number-font">
+    获得赞数
+    </view>
+  </view>
+</view>
+
+<view class="gray-bar"></view>
+
+<view class="posts" wx:if="{{posts && posts.length}}">
+  <view wx:for="{{posts}}"
+    wx:for-item="post"
+    wx:for-index="postIndex"
+    wx:key="{{post.id}}">
+    <post post="{{post}}" navigateToPost="true"
+      bindlikechange="onLikeChange" />
+    <view class="gray-bar height5"></view>
+  </view>
+</view>
+<view class="posts no-post content-center" wx:else>
+  <view>
+    <view><image mode="widthFix" src="../../images/empty-topic.png"></image></view>
+    <view class="no-post-text">还没有主题帖</view>
+  </view>
+</view>

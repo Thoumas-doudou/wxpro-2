@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "ads": "/pages/component/ads",
+    "post": "/pages/component/post",
+    "comment": "/pages/component/comment",
+    "input-limit": "/pages/component/input-limit",
+    "share-btn": "/pages/component/share-btn",
+    "image-selector": "/pages/component/image-selector"
+  },
+  "onReachBottomDistance": 500,
+  "enablePullDownRefresh": true
+}

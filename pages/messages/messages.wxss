@@ -1,0 +1,105 @@
+/* pages/messages/messages.wxss */
+page {
+  background-color: white;
+  overflow-x: hidden;
+}
+
+.messages {
+  overflow: hidden;
+}
+.message-wrapper {
+  margin-left: -14px;
+  margin-right: -26px;
+  padding-right: 26px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.message-wrapper .line {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #f5f5f5;
+  left: 52px;
+}
+
+.avatar {
+  padding-right: 8px;
+}
+.avatar image {
+  width:35px;
+  height:35px;
+  border-radius:100%;
+}
+.center-part {
+  margin-top: -3px;
+}
+.nickname-wrapper {
+  height:20px;
+  line-height:20px;
+}
+.nickname {
+  font-size:14px;
+  font-weight: bold;
+  color:#323b45;
+}
+
+.type-description {
+  margin-left: 10px;
+  font-size:14px;
+  color:#a8b6c8;
+}
+
+.description {
+  border-radius:8px;
+  width:60px;
+  height:60px;
+  overflow: hidden;
+  font-size:12px;
+  color:#a8b6c8;
+}
+
+.datetime {
+  font-size:12px;
+  color:#a8b6c8;
+}
+
+.message-content {
+  margin-top: 13px;
+  font-size:14px;
+  color:#323b45;
+  word-break:break-all;
+}
+
+image.preview-icon {
+  width: 13px;
+  height: 13px;
+  vertical-align: middle;
+  margin-right:5px;
+  margin-left:6px;
+  margin-top:-3px;
+}
+.preview-link {
+  font-size:14px;
+  color:#89a6ff;
+}
+
+.common-padding {
+  padding-top: 0;
+  border-top: 1px solid #f5f5f5;
+}
+.no-message {
+  height: 90vh;
+  font-size:14px;
+  color:#c8d4e0;
+}
+.no-message image {
+  width: 69px;
+  height: 72px;
+}
+.no-message-text {
+  margin-top: 20px;
+}

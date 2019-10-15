@@ -1,0 +1,45 @@
+<!--pages/post/add.wxml-->
+<!-- <view class="full"> -->
+<view class="common-padding">
+  <textarea class="fullwidth" auto-height="true" value="{{content}}" placeholder-class='placeholder' maxlength="2048" placeholder="来吧，尽情发挥吧..." bindinput="onContentChange" auto-focus="true">
+  </textarea>
+  <input-limit content="{{content}}" maxInputLength="{{maxInputLength}}" />
+</view>
+<!-- <view class="common-padding">
+  <textarea class="fullwidth" auto-height="true" value="{{wxId}}" placeholder-class='placeholder' maxlength="2048" placeholder="请输入微信号..." bindinput="onWxIdChange" auto-focus="true">
+  </textarea>
+  <input-limit content="{{wxId}}" maxInputLength="{{maxInputLength}}" />
+</view> -->
+<image-selector bindimageschange="onImagesChange" imageSize="large" />
+
+<view class="line-wrapper common-padding">
+  <view class="line"></view>
+</view>
+
+<view class="common-padding" style="padding-top: 0;">
+  <navigator class="select-topic-btn" url="../topic/topic-picker">
+    <image style="width: 32rpx; height: 28rpx; margin-right: 3px;" src="../../images/icon/topic.png"></image>
+    <text>{{topic.name || '选择主题'}}</text>
+    <image mode="widthFix" src="../../images/icon/right-triangle.png"></image>
+  </navigator>
+</view>
+
+<view class="common-padding" style="padding-top:0; margin-top:-16rpx">
+  <text class="text-hint">选择合适主题才会被更多人看到</text>
+</view>
+
+<view class="text-right common-padding submit-btn-wrapper">
+  <view class="anonymous inline-block">
+    <view class="checkbox" bindtap="onAnonymousClick">
+      <image wx:if="{{anonymous}}" src="/images/icon/anonymous-checked.png"></image>
+      <image wx:else src="/images/icon/anonymous.png"></image>
+      <text>匿名</text>
+    </view>
+  </view>
+  <view class="add-post-btn inline-block" bindtap="onAddPost">
+    <record-form-id>
+      <image src="../../images/send-btn.png" />
+    </record-form-id>
+  </view>
+</view>
+<!-- </view> -->

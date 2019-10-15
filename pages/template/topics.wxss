@@ -1,0 +1,127 @@
+.topics-wrapper {
+  background-color: white;
+  padding: 26rpx 0;
+  max-height: 80vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  box-sizing: border-box;
+}
+
+/* 横向的主题列表 */
+.topic-scroll-view-x {
+  width: 100%;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.topic {
+  position: relative;
+  display: block;
+  /* margin-left: 30px; */
+  /* margin-right: 26rpx; */
+}
+
+.topic + .topic {
+  margin-left: 0;
+}
+
+.topic-icon {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius:12px;
+}
+
+.topic-name {
+  padding: 16rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  position: absolute;
+  color: white;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height:100%;
+  box-sizing:border-box;
+  background-color: rgba(0,0,0,0.25);
+  border-radius: 12px;
+}
+.topic-name.no-mask {
+  background-color: transparent;
+}
+
+/* 纵向的主题列表 */
+.search-topics {
+  width: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.search-topics-input {
+  padding: 10rpx 26rpx;
+  margin: 20rpx 0;
+  text-align: center;
+  background-color: #f6f8fa;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #323b45;
+}
+.topic-scroll-view-y {
+  overflow-y: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.topic-item {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.topic-item .topic-icon {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 100rpx;
+  height: 100rpx;
+}
+.topic-item .topic-content {
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding-left: 14rpx;
+}
+.topic-item .topic-name {
+  position: unset;
+  font-size: 32rpx;
+  color: #323b45;
+  padding-top: 0;
+}
+.topic-item .topic-data {
+  font-size: 24rpx;
+  color: #a8b6c8;
+  padding: 0 16rpx;
+}
+.topic-item .topic-go-wrapper {
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.topic-item .topic-go {
+  background: #fde316;
+  border-radius: 100rpx;
+  width: 60rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  font-size: 24rpx;
+  text-align: center;
+}
+.vspace-30 {
+  padding-right: 30px
+}
+.vspace-13 {
+  padding-right: 13px
+}

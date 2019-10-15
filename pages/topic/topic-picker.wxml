@@ -1,0 +1,2 @@
+<!--pages/topic/topic-picker.wxml-->
+<topics topics="{{topics}}" role="{{role}}" fullHeight="true" />

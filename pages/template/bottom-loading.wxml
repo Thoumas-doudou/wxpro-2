@@ -1,0 +1,7 @@
+<template name="bottom-loading">
+  <view wx:if="true" class="bottom-loading-wrapper {{isAddBottomPadding && 'bottom-padding'}} {{!loading && 'bottom-loading-hidden'}}">
+    <view class="bottom-loading-inner">
+      <text>加载中...</text>
+    </view>
+  </view>
+</template>

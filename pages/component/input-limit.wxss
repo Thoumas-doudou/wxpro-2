@@ -1,0 +1,9 @@
+/* pages/component/input-limit.wxss */
+.input-limit {
+  color:#ccdbed;
+  font-size:12px;
+  text-align:right;
+}
+.input-limit.exceed {
+  color: #d00;
+}

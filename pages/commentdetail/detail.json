@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "comment": "/pages/component/comment",
+    "input-limit": "/pages/component/input-limit",
+    "image-selector": "/pages/component/image-selector"
+  }
+}

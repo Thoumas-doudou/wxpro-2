@@ -1,0 +1,195 @@
+<!--pages/component/post.wxml-->
+<!--
+一个帖子
+
+包含信息：
+
+1. 用户头像、昵称，时间；
+2. 所属主题
+3. 帖子内容
+3.1. 文字内容
+3.2. 图片（1图，2图，3图）
+4. 底部按钮栏，包括赞数，评论数分享按钮
+-->
+<view class="post-wrapper">
+  <view catchtap="onClickPost" url="/pages/post/post?id={{id}}"
+    bindtouchstart='onTouchStart' bindtouchend='onTouchEnd' data-debug-data="post:{{id}}">
+    <!-- 用户信息和所属主题 -->
+    <view class="post-header {{dateTimePosition!=='top'?'center':''}}">
+      <!-- 用户头像 -->
+      <record-form-id url="/pages/user/profile?openId={{author.openId}}">
+        <navigator class="post-info" url="/pages/user/profile?openId={{author.openId}}" catchtap="onEmptyFunction">
+          <view class="post-avatar">
+            <image mode="aspectFill" lazy-load="true" src="{{author.avatarUrl}}"></image>
+          </view>
+          <!-- 用户昵称和时间 -->
+          <view class="post-user-name-wrapper">
+            <view class="post-user-name">{{author.nickName}}</view>
+            <view wx:if="{{dateTimePosition==='top'}}" class="post-date">{{postDateString}}</view>
+          </view>
+        </navigator>
+      </record-form-id>
+      <!-- 所属主题 -->
+      <view wx:if="{{showTopicName}}" class="post-topic" catchtap="onEmptyFunction">
+
+        <record-form-id url="/pages/topic/topic?id={{topic.id}}">
+          <navigator url="/pages/topic/topic?id={{topic.id}}">
+            <image src="../../images/icon/topic.png"></image>
+            <text>{{topic.name}}</text>
+          </navigator>
+        </record-form-id>
+      </view>
+      <!-- 置顶标 -->
+      <view wx:if="{{!showTopicName && isTop}}" class="post-top-badge" catchtap="onEmptyFunction">
+        <view class="post-top-badge-wrapper">
+          <image mode='widthFix' src="../../images/icon/top.svg"></image>
+          <text>置顶</text>
+        </view>
+      </view>
+    </view>
+    <!-- post-header end -->
+
+    <!-- 帖子内容 -->
+    <view class="post-contents">
+      <!-- 文字内容 -->
+      <view wx:if="{{collapseTextContent}}" class="post-text-content collapse"
+        catchlongtap='onCopyContent' data-content="{{content}}">
+        <record-form-id>
+          <view class="post-text-content-inner"><text>{{content||''}}</text></view>
+          <view class="expand link">全文</view>
+        </record-form-id>
+      </view>
+      <view wx:else class="post-text-content"
+        catchlongtap='onCopyContent' data-content="{{content}}">
+        <text>{{content||''}}</text>
+      </view>
+      <!-- 链接 -->
+      <view wx:for="{{postURLS}}" wx:key="id">
+        <view wx:if="{{item.url}}" data-url="{{item.url}}" class="link-wrapper" catchtap='onLinkClick'>
+          <record-form-id>
+            <view><image src="../../images/icon/link.svg"></image></view>
+            <view class="link-inner">{{item.urlDescription || item.url}}</view>
+          </record-form-id>
+        </view>
+      </view>
+      <!-- 视频内容 -->
+      <view class="post-image-content-wrapper" wx:if="{{hasVideo}}">
+        <video src="{{videoUrl}}" catchtap="onEmptyFunction"></video>
+      </view>
+      <!-- 图片内容 -->
+      <view class="post-image-content-wrapper" wx:else>
+        <view class="post-image-content {{images.length > 1 ? 'flex' : ''}}">
+          <block wx:for="{{images}}" wx:for-item="image" wx:for-index="index" wx:key="image"
+              wx:if="{{index < maxImages}}">
+            <view class="post-image-{{images.length > 3 ? 3 : images.length}} post-image-wrapper">
+              <image mode="{{images.length === 1 ? imageMode : 'aspectFill'}}" lazy-load="true" src="{{image}}"
+                style="{{images.length === 1 ? imageStyle : ''}}"
+                catchtap="onPreviewImage"
+                bindload='onImageLoad'
+                data-src="{{image}}"
+                data-images="{{images}}"
+                data-index="{{index}}">
+                <block wx:if="{{!collapseImageContent || index < maxImages || images.length === 1}}">
+                  <view class="image-badge-wrapper" wx:if="{{imageTypes[index] === 'gif'}}">GIF</view>
+                  <view class="image-badge-wrapper" wx:if="{{isLongImageList[index]}}">长图</view>
+                </block>
+              </image>
+            </view>
+          </block>
+        </view>
+        <view class="image-badge-wrapper"
+          wx:if="{{showImageCount && images.length > 3}}">
+          <image class="image-count" src="../../images/icon/img-count.png"></image>
+          <text>{{images.length}}</text>
+        </view>
+      </view>
+      <!-- 外露评论 -->
+      <view class="hot-comment-wrapper" wx:if="{{isShowHotComment && showHotComment}}">
+        <image class="hot-icon" src="../../images/icon/hot.png"></image>
+        <text class="like-count">{{showHotComment.likeCount}}赞</text>
+        <text class="link">{{showHotComment.author.nickName}}</text>
+        <text>：</text>
+        <text class="content">{{showHotComment.content||''}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底栏 -->
+  <view class="post-tool-bar">
+    <!-- 时间 -->
+    <view wx:if="{{dateTimePosition==='bottom'}}" class="post-tool-bar-item post-date {{bottomBarType === 'text'?'has-function-btn':''}}">{{postDateString}}</view>
+    <!-- 赞 -->
+    <view class="post-tool-bar-item post-likes {{bottomBarType === 'text'?'has-function-btn':''}}">
+      <block wx:if="{{bottomBarType === 'icon'}}">
+        <image catchtap="postLike" data-id="{{id}}" mode="aspectFill" src="../../images/icon/like.png" wx:if="{{isLiked == false}}"></image>
+        <image catchtap="postDislike" data-id="{{id}}" mode="aspectFill" src="../../images/icon/liked.png" wx:else></image>
+      </block>
+      <block wx:else>
+        <text class="margin-right">赞</text>
+      </block>
+      <text>{{likeCount}}</text>
+    </view>
+    <!-- 评论 -->
+    <view class="post-tool-bar-item post-comments {{bottomBarType === 'text'?'has-function-btn':''}}">
+      <block wx:if="{{bottomBarType === 'icon'}}">
+        <record-form-id url='/pages/post/post?id={{id}}&autoFocus=true'>
+          <navigator url='/pages/post/post?id={{id}}&autoFocus=true'>
+            <image mode="widthFix" src="../../images/icon/comment.png"></image>
+            <text>{{commentCount}}</text>
+          </navigator>
+        </record-form-id>
+      </block>
+      <block wx:else class="margin-right">
+        <text class="margin-right">评论</text>
+        <text>{{commentCount}}</text>
+      </block>
+    </view>
+    <!-- 分享 -->
+    <!-- <button wx:if="{{bottomBarType === 'icon'}}"
+      class="post-tool-bar-item post-shares share-btn {{bottomBarType === 'text'?'has-function-btn':''}}"
+      data-id="{{id}}" data-is-shared="{{isShared}}"
+      data-content="{{content||''}}"
+      data-image-urls="{{images}}"
+      data-nick-name="{{author.nickName}}"
+      open-type="share">
+      <image mode="widthFix" src="../../images/icon/share.png"></image>
+      <text>{{shareCount}}</text>
+    </button> -->
+    <!--Reset due to share snapshot problem-->
+    <block wx:if="{{bottomBarType === 'icon'}}">
+      <share-btn wx:if="{{newShareStyle}}"
+        generateImageUrl="{{generateImageUrl}}"
+        hideSharePanel="{{hideSharePanel}}"
+        bindimagesaved="onShareImageSavedOrPreviewed"
+        bindimagepreviewed="onShareImageSavedOrPreviewed"
+        class="post-tool-bar-item post-shares share-btn {{bottomBarType === 'text'?'has-function-btn':''}}"
+        center="true"
+        post="{{post}}">
+        <button
+          class="post-tool-bar-item post-shares share-btn {{bottomBarType === 'text'?'has-function-btn':''}}"
+          data-id="{{id}}" data-is-shared="{{isShared}}"
+          data-content="{{content||''}}"
+          data-image-urls="{{images}}"
+          data-nick-name="{{author.nickName}}">
+          <image mode="widthFix" src="../../images/icon/share.png"></image>
+          <text>{{shareCount}}</text>
+        </button>
+      </share-btn>
+      <button wx:else
+        class="post-tool-bar-item post-shares share-btn {{bottomBarType === 'text'?'has-function-btn':''}}"
+        data-id="{{id}}" data-is-shared="{{isShared}}"
+        data-content="{{content||''}}"
+        data-image-urls="{{images}}"
+        data-nick-name="{{author.nickName}}"
+        open-type="share">
+        <image mode="widthFix" src="../../images/icon/share.png"></image>
+        <text>{{shareCount}}</text>
+      </button>
+    </block>
+    <!-- 功能按钮 -->
+    <view wx:if="{{bottomBarType === 'text'}}" class="post-tool-bar-item more-btn text-right {{bottomBarType === 'text'?'has-function-btn':''}}"
+      catchtap="onShowMenue" data-id="{{id}}">
+      <image mode="widthFix" src="../../images/icon/function-button.png"></image>
+    </view>
+  </view>
+</view>

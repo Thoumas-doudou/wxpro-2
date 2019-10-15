@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "input-limit": "/pages/component/input-limit"
+  }
+}

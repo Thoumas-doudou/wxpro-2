@@ -1,0 +1,11 @@
+<!--pages/login/login.wxml-->
+<view class="full content-center">
+  <view style="margin-top: -100px; padding: 0 30px; width: 100%">
+    <view class="title">登录二楼</view>
+    <view class="description">授权登录后才可以继续浏览</view>
+    <button open-type='getUserInfo' type='primary' bindgetuserinfo='onGetUserInfo' style="width: 100%">
+      <image mode="widthFix" src="../../images/icon/wechat.png"></image>
+      <text>微信帐号登录</text>
+    </button>
+  </view>
+</view>

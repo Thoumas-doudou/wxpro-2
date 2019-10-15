@@ -1,0 +1,79 @@
+<!--pages/messages/messages.wxml-->
+<import src="../template/bottom-loading.wxml" />
+
+<!-- 每一条消息的模板 -->
+<template name="message">
+  <view class="message-wrapper flex flex-top" bindtap="gotoContent" data-url="{{url}}"
+    bindtouchstart='onTouchStart' bindtouchend='onTouchEnd' data-debug-data="{{type}}:{{originData.id}}" bindlongpress='onLongPress' data-id="{{id}}">
+    <!-- 没读过的消息的小红点 -->
+    <view class="grow0 shrink0" style="width: 14px; padding-top: 3px;">
+      <block wx:if="{{timestamp > lastReadTimestamp}}">
+        <image lazy-load="true" src="../../images/icon/red-dot.png" style="width: 6px; height: 6px;"></image>
+      </block>
+    </view>
+    <!-- 头像 -->
+    <navigator url="../user/profile?openId={{author.openId}}" class="grow0" catchtap='onEmptyFunction'>
+      <view class="avatar"><image mode='aspectFill' lazy-load="true" src='{{author.avatarUrl}}'></image></view>
+    </navigator>
+    <!-- 中间部分，包括昵称，类型，时间，内容 -->
+    <view class="grow1 shrink1 center-part">
+      <view>
+        <!-- 昵称 -->
+        <navigator url="../user/profile?openId={{author.openId}}" class="inline-block nickname-wrapper" catchtap='onEmptyFunction'>
+          <text class="nickname">{{author.nickName}}</text>
+        </navigator>
+        <!-- 类型 -->
+        <text class="type-description">
+          <block wx:if="{{type === 'comment'}}">评论了你</block>
+          <block wx:if="{{type === 'reply'}}">回复了你</block>
+        </text>
+      </view>
+      <!-- 时间 -->
+      <view class="datetime">{{dateTimeString}}</view>
+      <!-- 内容 -->
+      <view class="message-content fullwidth">
+        <view>
+          <text>{{content}}</text>
+          <block wx:if="{{images && images.length > 0}}">
+            <!-- 如果有图可以预览图片 -->
+            <view class="inline-block" catchtap='onPreview' data-images="{{images}}">
+              <image lazy-load="true" class="preview-icon" src="../../images/icon/img.png"></image>
+              <text class="preview-link">查看图片</text>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+    <!-- 原始数据。例如回复的评论的图或文字内容，评论的帖子的图或文字内容等 -->
+    <view class="grow0 shrink0 description">
+      <view wx:if="{{originData.deletedMessage}}">{{originData.deletedMessage}}</view>
+      <block wx:elif="{{originData.images && originData.images.length > 0}}">
+        <image lazy-load="true" mode='aspectFill' class="full" src="{{originData.images[0]}}"></image>
+      </block>
+      <view wx:else>{{originData.content}}</view>
+    </view>
+
+    <view class='line'></view>
+  </view>
+</template>
+
+<!-- 页面内容，展示所有的消息的列表 -->
+<view class="messages common-padding">
+  <block wx:if="{{messages && messages.length}}">
+    <block wx:for="{{messages}}"
+      wx:for-item="message"
+      wx:key="{{message.id}}">
+      <template is="message" data="{{...message, lastReadTimestamp}}" />
+    </block>
+  </block>
+  <block wx:else>
+    <view class="no-message content-center">
+      <view>
+        <view><image src="../../images/empty-message.png"></image></view>
+        <view class="no-message-text">你还没有任何通知</view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<template is="bottom-loading" data="{{loading: bottomLoading}}"/>  

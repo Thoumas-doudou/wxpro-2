@@ -1,0 +1,46 @@
+<!--pages/my/my.wxml-->
+<template name="button">
+    <navigator class="button-wrapper flex" url="{{url}}">
+      <!-- 按钮左边的icon -->
+      <view class="grow0 button-icon-wrapper content-center">
+        <image class="button-icon" src="{{icon}}"></image>
+      </view>
+      <!-- 按钮文字 -->
+      <view class="grow1 content-vcenter">{{text}}</view>
+      <!-- 按钮右边的箭头 -->
+      <view class="grow2 text-right content-center">
+        <image class="button-icon-next" src="../../images/icon/next.png"></image>
+      </view>
+      <view class="line"></view>
+    </navigator>
+</template>
+
+<view class="page-wrapper">
+  <!-- banner，包括昵称，签名，头像 -->
+  <navigator url="../user/profile?openId={{openId}}" class="banner common-padding">
+    <block wx:if="{{loading}}">
+      <view class="content-center fullwidth">Loading...</view>
+    </block>
+    <block wx:else>
+      <view class="grow1 shrink1">
+        <!-- 昵称 -->
+        <view class="nickname">{{nickName}}</view>
+        <!-- 签名 -->
+        <view class="sign">{{sign || '还没有签名'}}</view>
+      </view>
+      <!-- 头像 -->
+      <view class="avatar grow0 shrink0">
+        <image mode='aspectFill' class="full" src="{{avatarUrl}}"></image>
+      </view>
+    </block>
+  </navigator>
+  <!-- end banner -->
+
+  <view class="gray-bar"></view>
+
+  <!-- 按钮列表 -->
+  <view class="button-group common-padding">
+    <template is="button" data="{{url: './my-profile', text: '我的资料', icon: '../../images/my/profile.png'}}" />
+    <template is="button" data="{{url: '../topic/topic?id=28', text: '问题反馈', icon: '../../images/my/feedback.png'}}" />
+  </view>
+</view>

@@ -1,0 +1,28 @@
+<template name="ads-swiper-items">
+  <block wx:for="{{advertisements}}"
+    wx:for-item="ad"
+    wx:for-index="index"
+    wx:key="{{index}}">
+    <swiper-item>
+      <view data-url="{{ad.url}}" class="image-wrapper {{cls}}" bindtap="gotoAd">
+        <view>
+          <image src="{{ad.image}}"></image>
+        </view>
+      </view>
+    </swiper-item>
+  </block>
+</template>
+
+<!--pages/component/ads.wxml-->
+<view class="ads" wx-if="{{advertisements && advertisements.length}}">
+  <view class="ads-title-wrapper common-padding">
+    <view class="ads-title">相关推荐</view>
+  </view>
+  <view class="ads-swiper">
+    <swiper autoplay="{{false}}" circular="{{false}}" previous-margin="15px" next-margin="15px">
+      <!-- 写两次提升循环滚动的体验 -->
+      <template is="ads-swiper-items" data="{{advertisements}}" />
+    </swiper>
+  </view>
+  <view class="graybar"></view>
+</view>

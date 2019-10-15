@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "record-form-id": "/pages/component/record-form-id",
+    "post": "/pages/component/post"
+  },
+  "onReachBottomDistance": 500,
+  "enablePullDownRefresh": true
+}

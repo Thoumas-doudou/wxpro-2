@@ -1,0 +1,19 @@
+<!-- 漂浮的发表按钮，点击跳转到发帖页面 -->
+<!-- 可接受的参数：topicId和topicName。可让发帖页面默认选中指定的主题 -->
+<template name="float-post-btn">
+  <view class="fixed right bottom float-btn-wrapper">
+    <record-form-id url="/pages/post/add?topicId={{topicId}}&topicName={{topicName}}">
+      <navigator url="/pages/post/add?topicId={{topicId}}&topicName={{topicName}}">
+        <image class="float-btn" mode="widthFix" src="../../images/add-post-btn.png"></image>
+      </navigator>
+    </record-form-id>
+  </view>
+</template>
+
+<template name="float-home-btn">
+  <view class="fixed right bottom float-btn-wrapper float-home-btn">
+    <navigator url="/pages/index/index" open-type="reLaunch">
+      <image class="float-btn" mode="widthFix" src="../../images/home-btn.png"></image>
+    </navigator>
+  </view>
+</template>

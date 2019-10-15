@@ -1,0 +1,5 @@
+<!--pages/component/input-limit.wxml-->
+  <view class="input-limit {{currentLength>maxInputLength?'exceed':''}}"
+    wx:if="{{maxInputLength - currentLength <= displayWhenRemainingLessThan}}">
+    <text>{{currentLength}}/{{maxInputLength}}</text>
+  </view>

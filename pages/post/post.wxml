@@ -1,0 +1,154 @@
+<!--pages/post/post.wxml-->
+<import src="../template/bottom-loading.wxml" />
+
+<!-- 评论的模板 -->
+<template name="comment-list">
+  <view class="comment-list-wrapper {{isFullHeight ? 'full-height' : ''}}">
+    <!-- 热门评论 / 所有评论 等标题 -->
+    <view class="title common-padding">
+      <view>{{title}}</view>
+    </view>
+    <!-- 评论列表 -->
+    <view class="comment-list">
+      <block wx:if="{{comments.length}}">
+        <block wx:for="{{comments}}"
+          wx:for-item="comment"
+          wx:key="{{comment.id}}"
+          wx:index="index">
+          <view class="comment-item">
+            <!-- 单个评论 -->
+            <comment bindreplyto="onReplyTo" bindlikechange="onLikeChange"
+              binddeletecomment="onDeleteComment" bindimageload="{{onImageLoad}}"
+              comment="{{comment}}"/>
+          </view>
+        </block>
+      </block>
+      <!-- 没有评论时的展示 -->
+      <block wx:elif="{{!loading}}">
+        <view class="no-comment content-center">
+          <view>当前还没有评论</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
+
+<view class="full relative">
+  <post post="{{post}}" dateTimePosition="bottom" bottomBarType="text" maxImages="9" bindimageload="onPostImageLoad" />
+
+  <view class="graybar"></view>
+
+  <!-- 广告位 -->
+  <ads advertisements="{{post.advertisements}}"/>
+  
+  <!-- 热门评论 -->
+  <template is="comment-list" data="{{title: '热门评论', comments: post.hotComments, onImageLoad: 'onHotCommentImageLoad'}}" wx:if="{{post.hotComments.length}}" />
+  <!-- 所有评论 -->
+  <view id="all-comments">
+    <template is="comment-list" data="{{title: '所有评论', comments: post.comments, isFullHeight: true}}" />
+  </view>
+
+  <template is="bottom-loading" data="{{loading: bottomLoading, isAddBottomPadding}}"/>
+
+  <!-- 底部栏 -->
+  <view class="bottom-bar-placeholder">
+    <!-- 这个看不见的框框是为了把滚动区域撑大，否则部分内容会被底栏挡住。 -->
+  </view>
+
+  <view class="fullwidth left bottom fixed bottom-bar flex nowrap {{isAddBottomPadding && 'bottom-padding'}}">
+    <!-- 返回北邮圈按钮。只有点击分享链接进入时才会显示 -->
+    <view class="grow0 shrink0 home-btn content-center"
+      wx:if="{{showHomeBtn && (!focused && !content && !images.length)}}">
+      <navigator url='/pages/index/index' open-type='reLaunch'>
+        <view>去二楼</view>
+        <view>首页</view>
+      </navigator>
+    </view>
+    <!-- 添加图片按钮 -->
+    <!-- 注：添加图片按钮目本该是得到焦点时才显示。但是那样有一些问题：点击这个图时输入框会失去焦点，这个按钮没了，事件
+      这里先让它一直显示。 -->
+    <view class="grow0 shrink0 send-btn content-center"
+      wx:if="{{focused || !!content || images.length || selectingImage || showAddImageBtn}}"
+      catchtap='onSelectImage'>
+      <image class="icon-img" src="../../images/icon/add-img.png"></image>
+    </view>
+    <!-- 输入框 -->
+    <!-- 输入框里有一个漂浮的textarea，会飘在share panel上。所以让他俩互斥出现来解决问题 -->
+    <view class="grow1 shrink1 input-wrapper {{focused || !!content || images.length || selectingImage || showAddImageBtn ? 'focused' : ''}}"
+      wx:if="{{!showSharePanel}}">
+      <view class="fullwidth input {{ isAndroid ? 'high-textarea' : ''}}">
+        <!-- 输入文本内容 -->
+        <!-- 加这个if else 纯粹就是为了设置不同的cursor-spacing。
+          目的是不让弹出的键盘挡住输入框。有图时键盘不挡住图。
+          尝试过cursor-spacing={{images.length > 0 : 120 : 20}}但是不work。 -->
+        <block wx:if="{{images.length === 0}}">
+          <textarea placeholder="{{replyToAuthor ? '回复 ' + replyToAuthor.nickName : '写下你想说的...'}}"
+            placeholder-class='placeholder' class="fullwidth" auto-height="true" fixed="true"
+            focus="{{focused}}" value="{{content}}"
+            bindinput="onInputChange" bindtap="onInputFocus"
+            bindfocus="onInputFocus" bindblur="onInputBlur"
+            maxlength="{{maxInputLength*2}}"
+            cursor-spacing='20'/>
+        </block>
+        <block wx:else>
+          <textarea placeholder="{{replyToAuthor ? '回复 ' + replyToAuthor.nickName : '写下你想说的...'}}"
+            placeholder-class='placeholder' class="fullwidth" auto-height="true" fixed="true"
+            focus="{{focused}}" value="{{content}}"
+            bindinput="onInputChange" bindtap="onInputFocus"
+            bindfocus="onInputFocus" bindblur="onInputBlur"
+            maxlength="{{maxInputLength*2}}"
+            cursor-spacing='120'/>
+        </block>
+        <input-limit content="{{content}}" maxInputLength="{{maxInputLength}}" displayWhenRemainingLessThan="16" />
+        <!-- 图片选择器 -->
+        <view wx:if="{{images.length > 0}}" style="margin-top: 6px;">
+          <image-selector displayImages="{{images}}"
+            maximages="1" bindimageschange="onImagesChange" hidepadding="true"/>
+        </view>
+      </view>
+    </view>
+    <!-- 点赞按钮 -->
+    <view class="grow0 shrink0 content-center"
+      style="height: 50px; padding-right: 40rpx;"
+      wx:if="{{!focused && !content && !images.length}}">
+      <view class="relative content-vcenter {{post.isLiked ? 'liked' : ''}}">
+        <image catchtap="postLike" style="width: 17px; height: 22px; margin-top: -5px; margin-left: 10px;"
+          src="../../images/icon/like.png" wx:if="{{post.isLiked == false}}"></image>
+        <image catchtap="postDislike" style="width: 17px; height: 22px; margin-top: -5px; margin-left: 10px;"
+          src="../../images/icon/liked.png" wx:else></image>
+        <view wx:if="{{post.likeCount}}" class="absolute right top badge">{{post.likeCount}}</view>
+      </view>
+    </view>
+    <!-- 分享按钮 -->
+    <view class="grow0 shrink0 content-center"
+      style="height: 50px; padding-right: 20rpx;"
+      wx:if="{{!focused && !content && !images.length}}">
+      <!-- <button class="relative share-btn" open-type='share'>
+        <image style="width: 60px; height: 28px;" src="../../images/icon/share-post.png"></image>
+        <view class="absolute share-count">{{post.shareCount}}</view>
+      </button> -->
+
+      <share-btn generateImageUrl="{{generateImageUrl}}"
+        hideSharePanel="{{hideSharePanel}}"
+        bindimagesaved="onShareImageSavedOrPreviewed"
+        bindimagepreviewed="onShareImageSavedOrPreviewed"
+        bindshowsharepanel="onShowSharePanel"
+        bindhidesharepanel="onHideSharePanel"
+        needBottomPadding="{{isAddBottomPadding}}">
+        <button class="relative share-btn">
+          <image style="width: 60px; height: 28px;" src="../../images/icon/share-post.png"></image>
+          <view class="absolute share-count">{{post.shareCount}}</view>
+        </button>
+      </share-btn>
+    </view>
+    <!-- 发送按钮 -->
+    <!-- <view class="grow0 shrink0 send-btn content-center"
+      wx:if="{{focused || !!content || images.length}}"
+      bindtap="onAddComment">发送</view> -->
+    <form class="grow0 shrink0"
+      report-submit='true' bindsubmit="onAddComment"
+      wx:if="{{focused || !!content || images.length}}">
+      <button class="send-btn share-btn" form-type="submit">发送</button>
+    </form>
+  </view>
+</view>

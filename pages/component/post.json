@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "record-form-id": "/pages/component/record-form-id",
+    "share-btn": "/pages/component/share-btn"
+  }
+}

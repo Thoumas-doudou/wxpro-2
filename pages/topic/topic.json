@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "record-form-id": "/pages/component/record-form-id",
+    "post": "/pages/component/post",
+    "share-btn": "/pages/component/share-btn",
+    "home-btn": "/pages/component/home-btn"
+  },
+  "enablePullDownRefresh": true
+}

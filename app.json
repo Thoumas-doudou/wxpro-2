@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/share-router",
+    "pages/commentdetail/detail",
+    "pages/login/login",
+    "pages/messages/messages",
+    "pages/my/my",
+    "pages/my/my-profile",
+    "pages/my/my-profile-edit",
+    "pages/post/add",
+    "pages/post/post",
+    "pages/topic/topic",
+    "pages/topic/topic-picker",
+    "pages/user/profile",
+    "pages/logs/logs",
+    "pages/webview/webview"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "二楼Slash",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#a8b6c8",
+    "selectedColor": "#89A6FF",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "推荐",
+        "iconPath": "/images/tabbar/recommend.png",
+        "selectedIconPath": "/images/tabbar/recommend-selected.png"
+      },
+      {
+        "pagePath": "pages/messages/messages",
+        "text": "消息",
+        "iconPath": "/images/tabbar/message.png",
+        "selectedIconPath": "/images/tabbar/message-selected.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "/images/tabbar/my.png",
+        "selectedIconPath": "/images/tabbar/my-selected.png"
+      }
+    ]
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx04ac159053b08612"
+  ],
+  "sitemapLocation": "sitemap.json"
+}

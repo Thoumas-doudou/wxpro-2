@@ -1,0 +1,16 @@
+/* pages/component/record-form-id.wxss */
+.submit-btn {
+  border: none!important;
+  background: none;
+  font-size: inherit;
+  color: inherit;
+  text-align: inherit;
+  padding: 0!important;
+  height: unset;
+  line-height: unset;
+  display: block;
+}
+.submit-btn:after {
+  border: none;
+  padding: 0;
+}

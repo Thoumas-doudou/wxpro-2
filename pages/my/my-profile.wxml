@@ -1,0 +1,29 @@
+<!--pages/my/my-profile.wxml-->
+<template name="list-item">
+  <view bindtap='onListItemClick' 
+    data-field="{{field}}"
+    data-url="./my-profile-edit?field={{field}}&value={{avatarUrl||value}}"
+    class="list-item flex nowrap">
+    <view class="title grow0 shrink0">{{title}}</view>
+    <view class="value grow1 shrink1 text-right">
+      <block wx:if="{{avatarUrl}}">
+        <view class="avatar">
+          <image mode="aspectFill" src="{{avatarUrl}}"></image>
+        </view>
+      </block>
+      <block wx:else>
+        {{value}}
+      </block>
+    </view>
+    <view class="arrow grow0 shrink0">
+      <image class="button-icon-next" src="../../images/icon/next.png"></image>
+    </view>
+  </view>
+</template>
+
+<view class="common-padding page-wrapper">
+  <template is="list-item" data="{{title: '头像', field: 'avatarUrl', avatarUrl}}"/>
+  <template is="list-item" data="{{title: '昵称', field: 'nickName', value: nickName}}"/>
+  <template is="list-item" data="{{title: '签名', field: 'sign', value: sign || ''}}"/>
+  <template is="list-item" data="{{title: '手机号', field: 'phone', value: phone || ''}}"/>
+</view>

@@ -1,0 +1,43 @@
+/* pages/my/my-profile.wxss */
+page {
+  background-color: white;
+}
+
+.button-icon-next {
+  width: 6px;
+  height: 12px;
+  margin-top: -2px;
+}
+
+.list-item {
+  padding: 18px 0;
+  border-bottom: 1px solid #f5f5f5;
+  border-top: 1px solid #f5f5f5;
+}
+
+.list-item + .list-item {
+  border-top: none;
+}
+
+.title {
+  font-size:16px;
+  color:#323b45;
+}
+
+.value {
+  font-size:13px;
+  color:#323b45;
+  padding-left: 10px;
+}
+
+.arrow {
+  padding-left: 10px;
+}
+
+.avatar image {
+  border:2px solid #ffffff;
+  box-shadow:0 4px 6px 0 rgba(0,0,0,0.1);
+  width:70px;
+  height:70px;
+  border-radius:100%;
+}

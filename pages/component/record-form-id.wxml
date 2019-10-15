@@ -1,0 +1,6 @@
+<!--pages/component/record-form-id.wxml-->
+<form report-submit='true' bindsubmit='onSubmit'>
+  <button class="submit-btn" form-type="submit">
+    <slot></slot>
+  </button>
+</form>
